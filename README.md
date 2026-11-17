@@ -4,7 +4,9 @@
 
 I compared three scoring methods on **284,807 real, anonymized card transactions** from ULB and Worldline. In the held-out arrival replay, **logistic regression caught 69 of 115 frauds using 87 of 100 available reviews**. Isolation Forest caught zero using all 100 slots. [Kaggle dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) · [Measured report](kaggle-report.json)
 
-[Download the interactive demo](https://raw.githubusercontent.com/Boothill2001/behavioral-anomaly-lab/main/index.html) and open the HTML file in a browser. Jump to the Kaggle comparison to inspect the results below. The five-step walkthrough uses a separate simulator with account history.
+**Windows quick start.** Double-click `start.bat` to open the demo. The app runs offline and requires no Python installation. You can also [download the interactive HTML](https://raw.githubusercontent.com/Boothill2001/behavioral-anomaly-lab/main/index.html) and open it directly.
+
+![The Kaggle experiment shows how the same models perform under a batch queue and an arrival-order queue.](kaggle-benchmark.png)
 
 ## One transaction explains the tradeoff
 
@@ -27,13 +29,6 @@ The amount baseline ranks by payment size. Isolation Forest learns an anomaly sc
 | **Class-weighted logistic regression** | **69/96** | **71/115** | **69/115** | **18** |
 
 Logistic regression earned the highest development catch count at the fixed budget. Its holdout result supports carrying it forward when training labels are available. Isolation Forest's drop from 39 catches to zero motivates investigation. The demo shows score and feature distribution shifts, queue overflow, and confirmed catches by six-hour window. Two days of data cannot establish the cause of that drop or estimate production losses avoided.
-
-<details>
-<summary>See the two queues and their monitoring on the same screen</summary>
-
-![The Kaggle benchmark shows retrospective and arrival-order results, a missed transaction, and diagnostics by six-hour window.](kaggle-benchmark.png)
-
-</details>
 
 ## Follow account behavior through the pipeline
 
