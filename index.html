@@ -21,6 +21,7 @@ header{border-bottom:1px solid var(--line);padding:0 0 24px;margin-bottom:20px}
 .meta,.kicker{font: .81rem/1.4 var(--mono);letter-spacing:.03em;color:var(--accent)}
 .intro{max-width:72ch;font-size:1.05rem;color:var(--muted)}
 .jump{margin-top:14px}.external{margin-top:20px;scroll-margin-top:12px}
+#language{float:right;margin-top:0;font-size:.85rem}
 .controls,.flow{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
 .controls{margin-bottom:20px}
 label{display:grid;gap:5px;color:var(--muted);font-size:.85rem;flex:1;min-width:min(100%,170px)}
@@ -52,14 +53,15 @@ footer{margin-top:24px;color:var(--muted);font-size:.88rem}
 <main>
   <header>
     <p class="meta">PORTFOLIO LAB / FRAUD REVIEW</p>
+    <a id="language" class="jump" hreflang="en" lang="en" href="?lang=en">English</a>
     <h1>Behavioral Anomaly Lab</h1>
     <p class="intro">Đi theo một giao dịch từ lúc xuất hiện đến lúc đội review thấy nó. Thử đổi ngân sách duyệt để thấy model bắt được thêm ca nào và tạo thêm bao nhiêu cảnh báo nhầm.</p>
     <p class="jump" id="kaggle-link" hidden><a href="#kaggle">Xem benchmark trên giao dịch thật từ Kaggle ↓</a></p>
   </header>
   <div class="controls">
-    <label>Ca muốn xem <select id="case"></select></label>
-    <label>Cách xếp hạng <select id="method"></select></label>
-    <label>Số giao dịch được duyệt mỗi ngày <select id="budget"></select></label>
+    <label><span id="case-label">Ca muốn xem</span><select id="case"></select></label>
+    <label><span id="method-label">Cách xếp hạng</span><select id="method"></select></label>
+    <label><span id="budget-label">Số giao dịch được duyệt mỗi ngày</span><select id="budget"></select></label>
   </div>
   <nav class="flow" aria-label="Các bước xử lý giao dịch"></nav>
   <div class="layout">
@@ -74,15 +76,40 @@ footer{margin-top:24px;color:var(--muted);font-size:.88rem}
 "use strict";
 const data = JSON.parse(document.querySelector("#report").textContent);
 const $ = id => document.getElementById(id);
+const english = new URLSearchParams(location.search).get("lang")==="en";
+const t = (vi,en) => english ? en : vi;
+const locale = t("vi-VN","en-US");
+if(english){
+  document.documentElement.lang="en";
+  const language=$("language");
+  language.textContent="Vietnamese";
+  language.lang="en";
+  language.hreflang="vi";
+  language.href="?lang=vi";
+  document.querySelector(".intro").textContent="Follow a card payment from arrival to analyst review. Change the review budget to see which frauds get caught and how many false alerts the queue creates.";
+  $("kaggle-link").firstElementChild.textContent="See the benchmark on real Kaggle transactions ↓";
+  $("case-label").textContent="Case";
+  $("method-label").textContent="Scoring method";
+  $("budget-label").textContent="Reviews per day";
+  document.querySelector("nav").setAttribute("aria-label","Transaction processing stages");
+  const footer=document.querySelector("footer");
+  footer.firstChild.textContent="Public simulated account data. Models trained and evaluated with scikit-learn. ";
+  footer.querySelector("a").textContent="Data source";
+}
 const select = {case:$("case"), method:$("method"), budget:$("budget")};
-const number = n => n.toLocaleString("vi-VN");
-const percent = n => (n * 100).toLocaleString("vi-VN",{maximumFractionDigits:1}) + "%";
+const number = n => n.toLocaleString(locale);
+const percent = n => (n * 100).toLocaleString(locale,{maximumFractionDigits:1}) + "%";
 const names = {
-  amount:"Baseline số tiền", amount_if:"Isolation Forest · số tiền", behavior_if:"Isolation Forest · hành vi",
-  behavior_only:"Hành vi tìm thấy ở K=50", amount_only:"Baseline tìm thấy ở K=50",
-  false_positive:"Cảnh báo nhầm ở K=50", missed:"Cả hai bỏ sót ở K=50"
+  amount:t("Baseline số tiền","Amount baseline"),
+  amount_if:t("Isolation Forest · số tiền","Isolation Forest · amount"),
+  behavior_if:t("Isolation Forest · hành vi","Isolation Forest · behavior"),
+  behavior_only:t("Hành vi tìm thấy ở K=50","Caught by behavioral model at K=50"),
+  amount_only:t("Baseline tìm thấy ở K=50","Caught by baseline at K=50"),
+  false_positive:t("Cảnh báo nhầm ở K=50","False alert at K=50"),
+  missed:t("Cả hai bỏ sót ở K=50","Missed by both at K=50")
 };
-const stages = ["Giao dịch","Lịch sử & feature","Điểm bất thường","Hàng đợi review","Đánh giá"];
+const stages = t(["Giao dịch","Lịch sử & feature","Điểm bất thường","Hàng đợi review","Đánh giá"],
+                 ["Transaction","History & features","Anomaly score","Review queue","Evaluation"]);
 let node = 0;
 function options(element, entries, selected){
   for(const [value,title] of entries) element.add(new Option(title,value));
@@ -115,45 +142,53 @@ function rows(title, labels, values){
 function render(){
   const tx=data.cases[select.case.value], m=select.method.value, k=Number(select.budget.value);
   const test=data.results.test, scores=test.methods[m], b=scores.budgets[k], s=tx.scores[m], accepted=s.daily_rank<=k;
-  const status=accepted?"Đưa vào hàng đợi":"Ngoài ngân sách review";
-  const outcome=accepted?(tx.label?"TP · phát hiện đúng":"FP · cảnh báo nhầm"):(tx.label?"FN · bỏ sót":"TN · bỏ qua đúng");
+  const status=accepted?t("Đưa vào hàng đợi","Sent to review"):t("Ngoài ngân sách review","Outside review budget");
+  const outcome=accepted?(tx.label?t("TP · phát hiện đúng","TP · fraud caught"):t("FP · cảnh báo nhầm","FP · false alert"))
+                        :(tx.label?t("FN · bỏ sót","FN · fraud missed"):t("TN · bỏ qua đúng","TN · correctly skipped"));
   const comparison=Object.entries(test.methods).map(([id, metric])=>{
     const item=metric.budgets[k];
     return `<div><div class="barhead"><span>${names[id]}</span><strong>${item.tp} / ${test.fraud}</strong></div>
     <div class="track" aria-hidden="true"><div class="fill" style="width:${(100*item.recall).toFixed(2)}%"></div></div>
-    <small>Precision ${percent(item.precision)} · Recall ${percent(item.recall)} · ${item.fp} cảnh báo nhầm</small></div>`;
+    <small>Precision ${percent(item.precision)} · Recall ${percent(item.recall)} · ${item.fp} ${t("cảnh báo nhầm","false alerts")}</small></div>`;
   }).join("");
-  $("comparison").innerHTML=`<p class="kicker">HOLDOUT / ${test.methods.amount.budgets[k].days.length} NGÀY</p>
-    <h2>Ai tìm được nhiều ca hơn?</h2>
-    <p class="muted">${number(test.rows)} giao dịch · ${number(test.fraud)} ca fraud mô phỏng · ${number(b.reviewed)} lượt duyệt mỗi phương pháp</p>
+  $("comparison").innerHTML=`<p class="kicker">HOLDOUT / ${test.methods.amount.budgets[k].days.length} ${t("NGÀY","DAYS")}</p>
+    <h2>${t("Ai tìm được nhiều ca hơn?","Which method caught more fraud?")}</h2>
+    <p class="muted">${number(test.rows)} ${t("giao dịch","transactions")} · ${number(test.fraud)} ${t("ca fraud mô phỏng","simulated frauds")} · ${number(b.reviewed)} ${t("lượt duyệt mỗi phương pháp","reviews per method")}</p>
     <div class="bars">${comparison}</div>
-    ${k===data.fixed_budget?`<p class="flag">Chọn trên dev · ${names[data.dev_winner]}</p>
-      <p class="muted">Trên holdout, có ${data.test_paired_at_fixed_budget.behavior_only} ca chỉ IF hành vi tìm thấy
-      và ${data.test_paired_at_fixed_budget.amount_only} ca chỉ baseline tìm thấy.</p>`:""}
-    <details><summary>Average Precision · toàn bộ thứ hạng</summary>
-    ${rows("AP trên holdout",["Cấu hình","AP"],Object.entries(test.methods).map(([id,x])=>[names[id],percent(x.ap)]))}</details>
-    <details><summary>Nhật ký theo ngày</summary>${rows(names[m],["Ngày","Duyệt","Bắt được","Fraud"],
+    ${k===data.fixed_budget?`<p class="flag">${t("Chọn trên dev","Selected on dev")} · ${names[data.dev_winner]}</p>
+      <p class="muted">${t("Trên holdout, có "+data.test_paired_at_fixed_budget.behavior_only+" ca chỉ IF hành vi tìm thấy và "+data.test_paired_at_fixed_budget.amount_only+" ca chỉ baseline tìm thấy.",
+      "On holdout, only behavioral Isolation Forest caught "+data.test_paired_at_fixed_budget.behavior_only+" frauds, while only the amount baseline caught "+data.test_paired_at_fixed_budget.amount_only+".")}</p>`:""}
+    <details><summary>${t("Average Precision · toàn bộ thứ hạng","Average Precision across the full ranking")}</summary>
+    ${rows(t("AP trên holdout","Holdout AP"),[t("Cấu hình","Method"),"AP"],Object.entries(test.methods).map(([id,x])=>[names[id],percent(x.ap)]))}</details>
+    <details><summary>${t("Nhật ký theo ngày","Daily results")}</summary>${rows(names[m],t(["Ngày","Duyệt","Bắt được","Fraud"],["Day","Reviewed","Caught","Fraud"]),
       b.days.map(x=>[x.day,x.reviewed,x.caught,x.fraud]))}</details>`;
   const views=[
-    () => "<p>Đầu vào là sự kiện thanh toán. Customer ID giúp tìm lịch sử. Terminal ID giúp nhận biết điểm thanh toán từng gặp.</p>"+
-      pair("Input · dòng giao dịch",tx.event,"Output · khóa tra cứu",
+    () => "<p>"+t("Đầu vào là sự kiện thanh toán. Customer ID giúp tìm lịch sử. Terminal ID giúp nhận biết điểm thanh toán từng gặp.",
+      "The input is a card payment. The customer ID retrieves account history. The terminal ID tells us whether the customer has used this terminal before.")+"</p>"+
+      pair(t("Input · dòng giao dịch","Input · transaction record"),tx.event,t("Output · khóa tra cứu","Output · history lookup key"),
         {customer_id:tx.event.customer_id, history_before:tx.event.timestamp}),
-    () => "<p>Feature chỉ nhìn lịch sử trước timestamp hiện tại. Hai giao dịch cùng timestamp không được tính vào lịch sử của nhau.</p>"+
-      pair("Input · ngữ cảnh lịch sử",{current_amount:tx.event.amount,prior_mean_amount:tx.prior_mean_amount,
-        prior_transactions:tx.features.prior_tx_total},"Output · feature hành vi",tx.features)+
-      `<details><summary>Xem tối đa 10 giao dịch gần nhất trước sự kiện</summary>${rows("Lịch sử tài khoản",["Thời điểm","Terminal","Số tiền"],
+    () => "<p>"+t("Feature chỉ nhìn lịch sử trước timestamp hiện tại. Hai giao dịch cùng timestamp không được tính vào lịch sử của nhau.",
+      "Features only use payments made before this transaction. Payments with the same timestamp are excluded from each other's history.")+"</p>"+
+      pair(t("Input · ngữ cảnh lịch sử","Input · account history"),{current_amount:tx.event.amount,prior_mean_amount:tx.prior_mean_amount,
+        prior_transactions:tx.features.prior_tx_total},t("Output · feature hành vi","Output · behavioral features"),tx.features)+
+      `<details><summary>${t("Xem tối đa 10 giao dịch gần nhất trước sự kiện","See the 10 most recent prior transactions")}</summary>${rows(t("Lịch sử tài khoản","Account history"),t(["Thời điểm","Terminal","Số tiền"],["Time","Terminal","Amount"]),
        tx.history.map(x=>[x.timestamp,x.terminal,x.amount]))}</details>`,
-    () => "<p>Isolation Forest chấm mức độ bất thường. Điểm cao xếp trước. Baseline chỉ xếp giao dịch theo số tiền. Điểm IF chưa được hiệu chuẩn thành xác suất fraud.</p>"+
-      pair("Input · gửi vào scorer",m==="behavior_if"?tx.features:m==="amount_if"?{log_amount:tx.features.log_amount}:{amount:tx.event.amount},
-        "Output · điểm và thứ hạng trong ngày",s),
-    () => `<p>Replay cuối ngày lấy tối đa ${k} giao dịch có thứ hạng cao nhất. Giao dịch trong hàng đợi sẽ được người duyệt kiểm tra.</p>
+    () => "<p>"+t("Isolation Forest chấm mức độ bất thường. Điểm cao xếp trước. Baseline chỉ xếp giao dịch theo số tiền. Điểm IF chưa được hiệu chuẩn thành xác suất fraud.",
+      "Isolation Forest ranks unusual transactions first. The amount baseline ranks by payment size. Isolation Forest scores are uncalibrated.")+"</p>"+
+      pair(t("Input · gửi vào scorer","Input · scoring features"),m==="behavior_if"?tx.features:m==="amount_if"?{log_amount:tx.features.log_amount}:{amount:tx.event.amount},
+        t("Output · điểm và thứ hạng trong ngày","Output · score and daily rank"),s),
+    () => `<p>${t("Replay cuối ngày lấy tối đa "+k+" giao dịch có thứ hạng cao nhất. Giao dịch trong hàng đợi sẽ được người duyệt kiểm tra.",
+      "At the end of the day, the top "+k+" transactions are assigned to analysts for review.")}</p>
       <p class="flag">${status}</p>`+
-      pair("Input · điểm và ngân sách",{daily_rank:s.daily_rank,budget:k},"Output · quyết định",{review:accepted}),
-    () => `<p>Nhãn từ bộ mô phỏng xuất hiện ở bước chấm. Precision là tỷ lệ cảnh báo đúng. Recall là tỷ lệ ca fraud được tìm thấy.</p>
+      pair(t("Input · điểm và ngân sách","Input · rank and review budget"),{daily_rank:s.daily_rank,budget:k},t("Output · quyết định","Output · review decision"),{review:accepted}),
+    () => `<p>${t("Nhãn từ bộ mô phỏng xuất hiện ở bước chấm. Precision là tỷ lệ cảnh báo đúng. Recall là tỷ lệ ca fraud được tìm thấy.",
+      "The simulator reveals the label at evaluation. Precision is the share of alerts confirmed as fraud. Recall is the share of all frauds caught.")}</p>
       <p class="flag">${outcome}</p>`+
-      pair("Input · quyết định và nhãn",{review:accepted,simulation_label:tx.label,scenario:tx.scenario},
-        "Output · cả tập holdout",{TP:b.tp,FP:b.fp,FN:b.fn,precision:percent(b.precision),recall:percent(b.recall)})+
-      "<details><summary>Tự kiểm tra · Tăng ngân sách giúp gì?</summary><p>Recall có thể tăng vì nhiều ca lọt vào queue. Hãy xem thêm bao nhiêu fraud và thêm bao nhiêu cảnh báo nhầm trước khi đề nghị tăng người duyệt.</p></details>"
+      pair(t("Input · quyết định và nhãn","Input · decision and label"),{review:accepted,simulation_label:tx.label,scenario:tx.scenario},
+        t("Output · cả tập holdout","Output · holdout metrics"),{TP:b.tp,FP:b.fp,FN:b.fn,precision:percent(b.precision),recall:percent(b.recall)})+
+      "<details><summary>"+t("Tự kiểm tra · Tăng ngân sách giúp gì?","What changes when analysts can review more?")+"</summary><p>"+
+      t("Recall có thể tăng vì nhiều ca lọt vào queue. Hãy xem thêm bao nhiêu fraud và thêm bao nhiêu cảnh báo nhầm trước khi đề nghị tăng người duyệt.",
+        "Recall can increase as the queue admits more transactions. Compare extra frauds caught with extra false alerts before expanding capacity.")+"</p></details>"
   ];
   $("stage").innerHTML=`<p class="kicker">NODE ${node+1} / ${stages.length} · TX ${tx.event.transaction_id}</p>
     <h2>${stages[node]}</h2>${views[node]()}`;
@@ -163,14 +198,15 @@ render();
 if(data.kaggle){
   const benchmark=data.kaggle, hold=benchmark.results.holdout, dev=benchmark.results.dev;
   const winner=benchmark.dev_winner;
-  const publicNames={amount:"Số tiền",isolation_forest:"Isolation Forest",logistic:"Logistic regression"};
-  $("kaggle").innerHTML=`<p class="kicker">KAGGLE / GIAO DỊCH THẬT</p><h2>Khi đã có nhãn, xếp hạng thế nào?</h2>
-    <p class="muted">${number(benchmark.rows)} giao dịch từ ULB/Worldline · ${number(hold.rows)} giao dịch holdout ·
-    ${hold.fraud} ca fraud holdout. Tách train, dev, holdout theo thứ tự thời gian.</p>
-    <div class="controls jump"><label>Số lượt Kaggle mỗi ${benchmark.batch_hours} giờ <select id="kaggle-budget"></select></label></div>
+  const publicNames={amount:t("Số tiền","Amount baseline"),isolation_forest:"Isolation Forest",logistic:"Logistic regression"};
+  $("kaggle").innerHTML=`<p class="kicker">KAGGLE / ${t("GIAO DỊCH THẬT","REAL TRANSACTIONS")}</p><h2>${t("Khi đã có nhãn, xếp hạng thế nào?","Which scorer fills the review queue best?")}</h2>
+    <p class="muted">${number(benchmark.rows)} ${t("giao dịch từ ULB/Worldline","ULB/Worldline transactions")} · ${number(hold.rows)} ${t("giao dịch holdout","holdout transactions")} ·
+    ${hold.fraud} ${t("ca fraud holdout. Tách train, dev, holdout theo thứ tự thời gian.","holdout frauds. Train, dev, and holdout are split by time.")}</p>
+    <div class="controls jump"><label>${t("Số lượt Kaggle mỗi "+benchmark.batch_hours+" giờ","Kaggle reviews per "+benchmark.batch_hours+" hours")} <select id="kaggle-budget"></select></label></div>
     <div id="kaggle-results" aria-live="polite"></div>
-    <p class="flag">Chọn trên dev ở ${benchmark.fixed_budget} lượt mỗi batch · ${publicNames[winner]}</p>
-    <p class="muted">Dữ liệu Kaggle đã ẩn danh đặc trưng và không có mã tài khoản. Isolation Forest học từ feature, Logistic regression dùng thêm nhãn lúc train. <a href="${benchmark.source_page}">Nguồn Kaggle</a></p>`;
+    <p class="flag">${t("Chọn trên dev ở "+benchmark.fixed_budget+" lượt mỗi batch","Selected on dev at "+benchmark.fixed_budget+" reviews per batch")} · ${publicNames[winner]}</p>
+    <p class="muted">${t("Dữ liệu Kaggle đã ẩn danh đặc trưng và không có mã tài khoản. Isolation Forest học từ feature, Logistic regression dùng thêm nhãn lúc train.",
+      "The Kaggle data has anonymized features and no account IDs. Isolation Forest learns from features alone. Logistic regression also uses training labels.")} <a href="${benchmark.source_page}">${t("Nguồn Kaggle","Kaggle source")}</a></p>`;
   const budget=$("kaggle-budget");
   options(budget,data.budgets.map(k=>[k,k]),benchmark.fixed_budget);
   function showKaggle(){
@@ -179,8 +215,8 @@ if(data.kaggle){
       const b=value.budgets[k];
       return [publicNames[id],dev.methods[id].budgets[k].tp+" / "+dev.fraud,b.tp+" / "+hold.fraud,b.fp,percent(value.ap)];
     });
-    $("kaggle-results").innerHTML=rows("Cùng ngân sách review, so ba cách xếp hạng",
-      ["Cấu hình","Bắt được ở dev","Bắt được ở holdout","Cảnh báo nhầm","AP holdout"],comparisonRows);
+    $("kaggle-results").innerHTML=rows(t("Cùng ngân sách review, so ba cách xếp hạng","Three methods at the same review budget"),
+      t(["Cấu hình","Bắt được ở dev","Bắt được ở holdout","Cảnh báo nhầm","AP holdout"],["Method","Caught on dev","Caught on holdout","False alerts","Holdout AP"]),comparisonRows);
   }
   budget.addEventListener("change",showKaggle);
   showKaggle();
@@ -192,7 +228,7 @@ if(data.kaggle){
     const evidence=benchmark.queue_gap_case;
     const caseRows=evidence?Object.entries(evidence.methods).map(([id,trace])=>{
       const cutoff=benchmark.arrival_replay[id].cutoff;
-      const decision=trace.admitted_online?"Đưa vào queue":trace.score<cutoff?"Dưới ngưỡng":"Hết lượt duyệt";
+      const decision=trace.admitted_online?t("Đưa vào queue","Sent to review"):trace.score<cutoff?t("Dưới ngưỡng","Below cutoff"):t("Hết lượt duyệt","Queue cap reached");
       return [publicNames[id],trace.rank,trace.score.toFixed(3),cutoff.toFixed(3),decision];
     }):[];
     const windows=benchmark.window_diagnostics.map(window=>{
@@ -204,15 +240,20 @@ if(data.kaggle){
               review.reviewed,review.caught+" / "+review.fraud];
     });
     $("kaggle").insertAdjacentHTML("beforeend",`
-      <details class="jump" open><summary>Khi không thể đợi hết batch, kết quả thay đổi thế nào?</summary>
-        <p>Ngưỡng chốt từ dev. Mỗi giao dịch đến được xét ngay theo điểm và số lượt còn lại. Mọi phương pháp có tối đa ${benchmark.fixed_budget} lượt mỗi batch.</p>
-        ${rows("Holdout · Top K cuối batch và replay theo thứ tự đến",["Cấu hình","Fraud cuối batch","Fraud khi replay","Đã duyệt","Vượt lượt","Cảnh báo nhầm"],replay)}
-        ${evidence?`<p class="flag">Dòng ${evidence.row_id} · Fraud theo nhãn · Khung ${evidence.batch*benchmark.batch_hours}–${(evidence.batch+1)*benchmark.batch_hours} giờ</p>
-        ${rows("Cùng giao dịch, hai cách ra quyết định",["Cấu hình","Hạng cuối batch","Điểm","Ngưỡng","Replay"],caseRows)}`:""}
+      <details class="jump" open><summary>${t("Khi không thể đợi hết batch, kết quả thay đổi thế nào?","What changes when decisions happen on arrival?")}</summary>
+        <p>${t("Ngưỡng chốt từ dev. Mỗi giao dịch đến được xét ngay theo điểm và số lượt còn lại. Mọi phương pháp có tối đa "+benchmark.fixed_budget+" lượt mỗi batch.",
+        "Each method uses a cutoff chosen on dev and has up to "+benchmark.fixed_budget+" reviews per batch. On arrival, a transaction is admitted if it clears the cutoff and capacity remains.")}</p>
+        ${rows(t("Holdout · Top K cuối batch và replay theo thứ tự đến","Holdout · end-of-batch Top K vs. arrival-order replay"),
+        t(["Cấu hình","Fraud cuối batch","Fraud khi replay","Đã duyệt","Vượt lượt","Cảnh báo nhầm"],["Method","Caught in batch","Caught on arrival","Reviews used","Overflow","False alerts"]),replay)}
+        ${evidence?`<p class="flag">${t("Dòng","Row")} ${evidence.row_id} · ${t("Fraud theo nhãn · Khung","Confirmed fraud · Hours")} ${evidence.batch*benchmark.batch_hours}–${(evidence.batch+1)*benchmark.batch_hours}</p>
+        ${rows(t("Cùng giao dịch, hai cách ra quyết định","One transaction under both policies"),
+        t(["Cấu hình","Hạng cuối batch","Điểm","Ngưỡng","Replay"],["Method","End-of-batch rank","Score","Cutoff","Arrival decision"]),caseRows)}`:""}
       </details>
-      <details><summary>Monitoring · xem từng khung 6 giờ</summary>
-        <p>JS divergence đo độ dịch chuyển phân phối so với dev. Nhãn fraud chỉ xuất hiện khi chấm hậu kiểm. Hai khung quan sát chỉ đủ để nêu tín hiệu thay đổi.</p>
-        ${rows("Thay đổi điểm, đặc trưng và queue trên holdout",["Giờ","JS điểm IF","JS điểm Logistic","Feature dịch chuyển nhất","Đã duyệt","Fraud bắt được"],windows)}
+      <details><summary>${t("Monitoring · xem từng khung 6 giờ","Monitoring by six-hour window")}</summary>
+        <p>${t("JS divergence đo độ dịch chuyển phân phối so với dev. Nhãn fraud chỉ xuất hiện khi chấm hậu kiểm. Hai khung quan sát chỉ đủ để nêu tín hiệu thay đổi.",
+        "Jensen–Shannon divergence measures distribution shifts from dev. Fraud labels are used after replay. Two windows show observed shifts and leave their causes unresolved.")}</p>
+        ${rows(t("Thay đổi điểm, đặc trưng và queue trên holdout","Holdout score shifts, feature shifts, and review outcomes"),
+        t(["Giờ","JS điểm IF","JS điểm Logistic","Feature dịch chuyển nhất","Đã duyệt","Fraud bắt được"],["Hours","IF score JS","Logistic score JS","Largest feature shifts","Reviewed","Fraud caught"]),windows)}
       </details>`);
   }
   $("kaggle").hidden=false;

@@ -4,7 +4,7 @@
 
 I compared three scoring methods on **284,807 real, anonymized card transactions** from ULB and Worldline. In the held-out arrival replay, **logistic regression caught 69 of 115 frauds using 87 of 100 available reviews**. Isolation Forest caught zero using all 100 slots. [Kaggle dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) · [Measured report](kaggle-report.json)
 
-**Windows quick start.** Double-click `start.bat` to open the demo. The app runs offline and requires no Python installation. You can also [download the interactive HTML](https://raw.githubusercontent.com/Boothill2001/behavioral-anomaly-lab/main/index.html) and open it directly.
+**Windows quick start.** Double-click `start.bat` and select **English** at the top of the demo. The app runs offline and requires no Python installation. You can also [download the interactive HTML](https://raw.githubusercontent.com/Boothill2001/behavioral-anomaly-lab/main/index.html) and open it directly.
 
 ![The Kaggle experiment shows how the same models perform under a batch queue and an arrival-order queue.](kaggle-benchmark.png)
 
