@@ -8,6 +8,60 @@ I compared scoring methods on **284,807 real, anonymized card transactions** fro
 
 ![The selected five-feature IF catches a fraud missed by the 29-feature model. The table shows results across the same evaluation cohort.](if-feature-study.png)
 
+## What happens to the transactions nobody flags?
+
+**Three models can agree to skip a transaction and all be wrong.** The new **[Shadow Evaluation & Delayed Ground Truth walkthrough](shadow.html)** follows real scores through queue routing, sampled non-alert review, delayed verification, weighted evaluation and a release decision. Open the local demo and follow the **Shadow evaluation** link at the top, or open `shadow.html` directly.
+
+![The complete review sample matures, but most transactions remain unknown. Weighted estimates are kept distinct from exact retrospective audit metrics.](shadow-evaluation.png)
+
+The existing dev-selected depth-4 XGBoost is the champion. Logistic regression and the label-informed five-feature IF run as shadow challengers on exactly the same **92,576 event IDs** from the final 12 hours. Only the champion controls its 50-slot-per-six-hour queue. Challengers do not consume its slots. All three models are genuinely refitted and scored; model-state hashes, feature lists, event-ID hashes and repeat-inference checks are recorded.
+
+The source has **two days of real transactions**, not a week of production traffic. The following review process is **simulated**: review all **97** champion admissions, then draw **9,248** additional cases by simple random sampling without replacement from **92,479** non-admitted events. The inclusion probability for that stratum is **10.0001%**. These extra QA reviews are a separate experimental workload, not hidden inside the 50-slot queue.
+
+Labels arrive **1–7 simulated days after cohort closure**, independently of fraud status and prediction. The historical Kaggle label substitutes for eventual verified truth; this does not validate a real human-review process.
+
+| Snapshot | Verified labels | Pending selected reviews | Population label coverage | Performance evaluation |
+|---|---:|---:|---:|---|
+| Day +0 | 0 | 9,345 | 0.00% | Blocked |
+| Day +2 | 2,678 | 6,667 | 2.89% | Blocked: sample not fully mature |
+| Day +7 | 9,345 | 0 | 10.09% | Sample-weighted estimates available |
+
+**Unknown is not legitimate.** Even at day +7, **83,231** unsampled transactions remain unknown to the review pipeline. Pending labels never become negative labels by default. Partial maturation adds another observation mechanism, so this module deliberately blocks inference until the selected sample is complete.
+
+### Why random QA changes the answer
+
+Random QA found **five frauds** outside the champion queue. Weighting each sampled non-admitted case by the inverse of its inclusion probability estimates approximately **50 missed frauds**. The champion's 78 caught frauds are a census of its actual admissions. Its estimated population recall is therefore **60.94%**, rather than the misleading `78 / (78 + 5) = 93.98%` from counting reviewed labels without accounting for sampling.
+
+For every model, the module estimates TP, FP and FN with Horvitz–Thompson totals, then reports precision and recall as ratios of those estimated totals. All models use the same verified review sample and inclusion probabilities. The public dataset's full labels are kept in a separate **offline census audit**, excluded from sampling, cutoff selection and the delayed-review evaluation.
+
+| Champion result | Recall |
+|---|---:|
+| Naive calculation on reviewed cases only · biased | 93.98% |
+| Sampling-aware estimate from the simulated review process | 60.94% |
+| Exact retrospective census audit · 78 / 115 | 67.83% |
+
+**The estimate is not the truth.** Five QA positives are sparse, so the missed-fraud estimate is uncertain. A particularly useful counterexample is the IF challenger's sample-weighted precision estimate of **100%**: zero false alerts happened to be observed in its reviewed sample. The full historical audit still contains false alerts. This is not evidence of perfect precision. No confidence-bound release criterion is implemented, so favorable point estimates cannot authorize rollout.
+
+### Monitoring checks and the release decision
+
+- **Label coverage and maturity:** how much of the population has verified labels, and whether the selected sample is complete.
+- **Sampling-aware quality:** estimated TP/FP/FN, precision and recall; exact census metrics appear only in the explicitly separate audit.
+- **Paired routing disagreement:** challenger and champion decisions on identical event IDs, plus cases all models skip.
+- **Score PSI:** development-quantile bins with infinite outer edges and 0.5 pseudocount smoothing. It diagnoses distribution change; it does not establish concept drift or its cause.
+- **Reproducibility and runtime:** repeated scores and decisions, model/version hashes, inference errors and measured p95 CPU scoring latency over 50 warmed 1,024-row batches. Batch timing is not per-event latency or a serving SLO.
+
+The result is **HOLD**, not an automatic release: the cohort has already been inspected in earlier research, review delays are simulated, QA positives are sparse, and actual serving parity and production SLOs have not been measured. There is no universal “less than 10% difference is safe” rule.
+
+```powershell
+python shadow_evaluation.py
+python -m unittest test_shadow -v
+
+# Rebuild the walkthrough from the measured report without refitting:
+python shadow_evaluation.py --render-only
+```
+
+[Measured report and release reasons](shadow-report.json) · [Full compressed prediction/review ledger](shadow-ledger.csv.gz) · [Evaluation and sampling code](shadow_evaluation.py) · [Tests](test_shadow.py)
+
 ## One transaction explains the tradeoff
 
 On arrival, **transaction 276864** scored **9.971**. The review cutoff, set on development data, was **10.554**. The queue skipped it. By the end of its batch the same transaction ranked **46th**, so a batch policy reviewing the top 50 would have included it. The historical label confirmed fraud.
