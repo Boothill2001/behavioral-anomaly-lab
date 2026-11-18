@@ -30,6 +30,37 @@ The amount baseline ranks by payment size. Isolation Forest learns an anomaly sc
 
 Logistic regression earned the highest development catch count at the fixed budget. Its holdout result supports carrying it forward when training labels are available. Isolation Forest's drop from 39 catches to zero motivates investigation. The demo shows score and feature distribution shifts, queue overflow, and confirmed catches by six-hour window. Two days of data cannot establish the cause of that drop or estimate production losses avoided.
 
+## Could a better Isolation Forest rescue the missed transaction?
+
+**It rescued the example and made the queue worse overall.** In a follow-up on the same inspected dataset, adding an IF score to logistic regression brought transaction **276864** into review. At seed 42 it also lost **six previously caught frauds**, including row **235634**, whose score exceeded the cutoff but arrived after the queue filled.
+
+| Method | Seed | Fraud caught on arrival | False alerts | Reviews used |
+|---|---:|---:|---:|---:|
+| Logistic regression | Fixed baseline | **69/115** | **18** | 87 |
+| Dev-selected IF | 42 / 43 / 44 | 0 / 0 / 1 | 84 / 82 / 79 | 84 / 82 / 80 |
+| Logistic + IF score | 42 | 65/115 | 30 | 95 |
+| Logistic + IF score | 43 | 65/115 | 26 | 91 |
+| Logistic + IF score | 44 | 66/115 | 26 | 92 |
+
+The default remains logistic regression. The combined candidate had to catch more fraud without adding false alerts across all three seeds. It failed that gate. This follow-up measures research progress on data already inspected.
+
+![Transaction 276864 is rescued by the combined classifier, while the aggregate table shows more missed frauds and false alerts.](if-research-case.png)
+
+<details>
+<summary>See the regression that explains the rollout decision</summary>
+
+![Transaction 235634 clears the combined score cutoff but is excluded because the queue has reached capacity.](if-research-regression.png)
+
+</details>
+
+**What the diagnostics revealed.** In the original IF, the 20 inspected false alerts scored **0.712–0.793**, while the 20 frauds nearest the top of the missed ranking scored **0.604–0.656**. The queue prioritized those legitimate outliers. A higher median fraud score than legitimate score still left the extreme top ranks full of false alerts. The demo shows score distributions by label and six-hour window, plus feature shifts for investigation.
+
+**How the experiment ran.** Six IF configurations combine `max_samples` of 256, 1,024 or 4,096 with `max_features` of 0.5 or 1.0, using 100 trees and seeds 42/43/44. Selection maximizes mean dev catches at 50 reviews per batch, then minimizes seed variation and sample count. The selected configuration uses **1,024 samples and all features**, catching 41/43/42 dev frauds. Five shuffled training folds generate an IF feature for logistic regression, with every row scored by a forest fitted on the other folds. The complete training period precedes dev and evaluation. A full-train IF scores later rows. This assumes historical training labels are available.
+
+Open the demo in English and select **Why did Isolation Forest miss fraud?** Choose a seed and a case group to inspect 20 original false alerts, 20 missed frauds, recovered cases, regressions, and persistent misses. Each case shows its 29 input features, score, rank, cutoff, queue decision and historical label.
+
+[Development selection](if-dev-selection.json) · [Research results, seeds, paired changes and cases](if-research-report.json)
+
 ## Follow account behavior through the pipeline
 
 The Kaggle data has anonymized inputs and no account IDs. A [public transaction simulator](https://github.com/Fraud-Detection-Handbook/simulated-data-raw) supplies account history for the walkthrough. It shows the inputs and outputs of all five steps.
@@ -66,3 +97,5 @@ python -m unittest discover -v
 ```
 
 Open `index.html`. It embeds the reports and works offline. [GitHub Actions](https://github.com/Boothill2001/behavioral-anomaly-lab/actions/workflows/verify.yml) runs the unit tests and checks that rebuilding the demo from the committed reports produces the same HTML.
+
+To reproduce the IF follow-up, run `python if_research.py`, followed by `python experiment.py --render-only`. The runner writes the dev selection before scoring the final 12 hours and saves a separate research report. Opening the demo with `start.bat` uses the saved results.

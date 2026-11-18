@@ -1,0 +1,2925 @@
+{
+  "rule": "mean dev Top50 catches desc, seed standard deviation asc, samples asc, features asc",
+  "chosen_config": {
+    "max_samples": 1024,
+    "max_features": 1.0,
+    "n_estimators": 100
+  },
+  "grid": [
+    {
+      "config": {
+        "max_samples": 256,
+        "max_features": 0.5,
+        "n_estimators": 100
+      },
+      "mean_dev_caught": 38.0,
+      "std_dev_caught": 2.160246899469287,
+      "runs": [
+        {
+          "seed": 42,
+          "metrics": {
+            "ap": 0.4005499138450516,
+            "budgets": {
+              "10": {
+                "tp": 11,
+                "fp": 9,
+                "fn": 85,
+                "reviewed": 20,
+                "precision": 0.55,
+                "recall": 0.11458333333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 10
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 1
+                  }
+                ]
+              },
+              "25": {
+                "tp": 23,
+                "fp": 27,
+                "fn": 73,
+                "reviewed": 50,
+                "precision": 0.46,
+                "recall": 0.23958333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 22
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 58,
+                "fp": 142,
+                "fn": 38,
+                "reviewed": 200,
+                "precision": 0.29,
+                "recall": 0.6041666666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 54
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 4
+                  }
+                ]
+              },
+              "200": {
+                "tp": 62,
+                "fp": 338,
+                "fn": 34,
+                "reviewed": 400,
+                "precision": 0.155,
+                "recall": 0.6458333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 57
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 5
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6680598709287837,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 90,
+            "overflow": 10,
+            "caught": 37,
+            "false_alerts": 53,
+            "missed": 59,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 60,
+                "reviewed": 50,
+                "overflow": 10,
+                "caught": 36
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 40,
+                "reviewed": 40,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 43,
+          "metrics": {
+            "ap": 0.36639841982100396,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 24,
+                "fp": 26,
+                "fn": 72,
+                "reviewed": 50,
+                "precision": 0.48,
+                "recall": 0.25,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 23
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 39,
+                "fp": 61,
+                "fn": 57,
+                "reviewed": 100,
+                "precision": 0.39,
+                "recall": 0.40625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 38
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 56,
+                "fp": 144,
+                "fn": 40,
+                "reviewed": 200,
+                "precision": 0.28,
+                "recall": 0.5833333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 55
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 61,
+                "fp": 339,
+                "fn": 35,
+                "reviewed": 400,
+                "precision": 0.1525,
+                "recall": 0.6354166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 57
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 4
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6734919857628692,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 96,
+            "overflow": 4,
+            "caught": 41,
+            "false_alerts": 55,
+            "missed": 55,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 54,
+                "reviewed": 50,
+                "overflow": 4,
+                "caught": 40
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 46,
+                "reviewed": 46,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 44,
+          "metrics": {
+            "ap": 0.28249069913663605,
+            "budgets": {
+              "10": {
+                "tp": 8,
+                "fp": 12,
+                "fn": 88,
+                "reviewed": 20,
+                "precision": 0.4,
+                "recall": 0.08333333333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 8
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 20,
+                "fp": 30,
+                "fn": 76,
+                "reviewed": 50,
+                "precision": 0.4,
+                "recall": 0.20833333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 20
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 0
+                  }
+                ]
+              },
+              "50": {
+                "tp": 35,
+                "fp": 65,
+                "fn": 61,
+                "reviewed": 100,
+                "precision": 0.35,
+                "recall": 0.3645833333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 34
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 55,
+                "fp": 145,
+                "fn": 41,
+                "reviewed": 200,
+                "precision": 0.275,
+                "recall": 0.5729166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 54
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 63,
+                "fp": 337,
+                "fn": 33,
+                "reviewed": 400,
+                "precision": 0.1575,
+                "recall": 0.65625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 58
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 5
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6669431114464106,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 99,
+            "overflow": 1,
+            "caught": 36,
+            "false_alerts": 63,
+            "missed": 60,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 51,
+                "reviewed": 50,
+                "overflow": 1,
+                "caught": 35
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 49,
+                "reviewed": 49,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "config": {
+        "max_samples": 256,
+        "max_features": 1.0,
+        "n_estimators": 100
+      },
+      "mean_dev_caught": 39.666666666666664,
+      "std_dev_caught": 0.4714045207910317,
+      "runs": [
+        {
+          "seed": 42,
+          "metrics": {
+            "ap": 0.2765376606414801,
+            "budgets": {
+              "10": {
+                "tp": 8,
+                "fp": 12,
+                "fn": 88,
+                "reviewed": 20,
+                "precision": 0.4,
+                "recall": 0.08333333333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 8
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 20,
+                "fp": 30,
+                "fn": 76,
+                "reviewed": 50,
+                "precision": 0.4,
+                "recall": 0.20833333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 20
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 0
+                  }
+                ]
+              },
+              "50": {
+                "tp": 39,
+                "fp": 61,
+                "fn": 57,
+                "reviewed": 100,
+                "precision": 0.39,
+                "recall": 0.40625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 38
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 51,
+                "fp": 149,
+                "fn": 45,
+                "reviewed": 200,
+                "precision": 0.255,
+                "recall": 0.53125,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 50
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 62,
+                "fp": 338,
+                "fn": 34,
+                "reviewed": 400,
+                "precision": 0.155,
+                "recall": 0.6458333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 59
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 3
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6663452704970576,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 96,
+            "overflow": 4,
+            "caught": 42,
+            "false_alerts": 54,
+            "missed": 54,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 54,
+                "reviewed": 50,
+                "overflow": 4,
+                "caught": 41
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 46,
+                "reviewed": 46,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 43,
+          "metrics": {
+            "ap": 0.4382866259668598,
+            "budgets": {
+              "10": {
+                "tp": 10,
+                "fp": 10,
+                "fn": 86,
+                "reviewed": 20,
+                "precision": 0.5,
+                "recall": 0.10416666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 10
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 24,
+                "fp": 26,
+                "fn": 72,
+                "reviewed": 50,
+                "precision": 0.48,
+                "recall": 0.25,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 23
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 54,
+                "fp": 146,
+                "fn": 42,
+                "reviewed": 200,
+                "precision": 0.27,
+                "recall": 0.5625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 53
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 63,
+                "fp": 337,
+                "fn": 33,
+                "reviewed": 400,
+                "precision": 0.1575,
+                "recall": 0.65625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 58
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 5
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6594301037933433,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 95,
+            "overflow": 5,
+            "caught": 43,
+            "false_alerts": 52,
+            "missed": 53,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 55,
+                "reviewed": 50,
+                "overflow": 5,
+                "caught": 42
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 45,
+                "reviewed": 45,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 44,
+          "metrics": {
+            "ap": 0.3099504235172723,
+            "budgets": {
+              "10": {
+                "tp": 8,
+                "fp": 12,
+                "fn": 88,
+                "reviewed": 20,
+                "precision": 0.4,
+                "recall": 0.08333333333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 8
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 23,
+                "fp": 27,
+                "fn": 73,
+                "reviewed": 50,
+                "precision": 0.46,
+                "recall": 0.23958333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 22
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 51,
+                "fp": 149,
+                "fn": 45,
+                "reviewed": 200,
+                "precision": 0.255,
+                "recall": 0.53125,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 50
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 62,
+                "fp": 338,
+                "fn": 34,
+                "reviewed": 400,
+                "precision": 0.155,
+                "recall": 0.6458333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 58
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 4
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6670243986997806,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 96,
+            "overflow": 4,
+            "caught": 41,
+            "false_alerts": 55,
+            "missed": 55,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 54,
+                "reviewed": 50,
+                "overflow": 4,
+                "caught": 40
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 46,
+                "reviewed": 46,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "config": {
+        "max_samples": 1024,
+        "max_features": 0.5,
+        "n_estimators": 100
+      },
+      "mean_dev_caught": 40.666666666666664,
+      "std_dev_caught": 0.9428090415820634,
+      "runs": [
+        {
+          "seed": 42,
+          "metrics": {
+            "ap": 0.36406077270199183,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 21,
+                "fp": 29,
+                "fn": 75,
+                "reviewed": 50,
+                "precision": 0.42,
+                "recall": 0.21875,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 20
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 57,
+                "fp": 143,
+                "fn": 39,
+                "reviewed": 200,
+                "precision": 0.285,
+                "recall": 0.59375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 55
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 2
+                  }
+                ]
+              },
+              "200": {
+                "tp": 63,
+                "fp": 337,
+                "fn": 33,
+                "reviewed": 400,
+                "precision": 0.1575,
+                "recall": 0.65625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 57
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 6
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6746175468235119,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 97,
+            "overflow": 3,
+            "caught": 41,
+            "false_alerts": 56,
+            "missed": 55,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 53,
+                "reviewed": 50,
+                "overflow": 3,
+                "caught": 40
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 47,
+                "reviewed": 47,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 43,
+          "metrics": {
+            "ap": 0.4379755516311045,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 24,
+                "fp": 26,
+                "fn": 72,
+                "reviewed": 50,
+                "precision": 0.48,
+                "recall": 0.25,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 23
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 55,
+                "fp": 145,
+                "fn": 41,
+                "reviewed": 200,
+                "precision": 0.275,
+                "recall": 0.5729166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 54
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 66,
+                "fp": 334,
+                "fn": 30,
+                "reviewed": 400,
+                "precision": 0.165,
+                "recall": 0.6875,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 59
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 7
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6640537836182634,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 95,
+            "overflow": 5,
+            "caught": 43,
+            "false_alerts": 52,
+            "missed": 53,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 55,
+                "reviewed": 50,
+                "overflow": 5,
+                "caught": 42
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 45,
+                "reviewed": 45,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 44,
+          "metrics": {
+            "ap": 0.4343323730144222,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 25,
+                "fp": 25,
+                "fn": 71,
+                "reviewed": 50,
+                "precision": 0.5,
+                "recall": 0.2604166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 24
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 42,
+                "fp": 58,
+                "fn": 54,
+                "reviewed": 100,
+                "precision": 0.42,
+                "recall": 0.4375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 41
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 57,
+                "fp": 143,
+                "fn": 39,
+                "reviewed": 200,
+                "precision": 0.285,
+                "recall": 0.59375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 54
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 3
+                  }
+                ]
+              },
+              "200": {
+                "tp": 67,
+                "fp": 333,
+                "fn": 29,
+                "reviewed": 400,
+                "precision": 0.1675,
+                "recall": 0.6979166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 61
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 6
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6666063066560409,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 90,
+            "overflow": 10,
+            "caught": 40,
+            "false_alerts": 50,
+            "missed": 56,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 60,
+                "reviewed": 50,
+                "overflow": 10,
+                "caught": 39
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 40,
+                "reviewed": 40,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "config": {
+        "max_samples": 1024,
+        "max_features": 1.0,
+        "n_estimators": 100
+      },
+      "mean_dev_caught": 42.0,
+      "std_dev_caught": 0.816496580927726,
+      "runs": [
+        {
+          "seed": 42,
+          "metrics": {
+            "ap": 0.4076855058951711,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 24,
+                "fp": 26,
+                "fn": 72,
+                "reviewed": 50,
+                "precision": 0.48,
+                "recall": 0.25,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 24
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 0
+                  }
+                ]
+              },
+              "50": {
+                "tp": 41,
+                "fp": 59,
+                "fn": 55,
+                "reviewed": 100,
+                "precision": 0.41,
+                "recall": 0.4270833333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 40
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 56,
+                "fp": 144,
+                "fn": 40,
+                "reviewed": 200,
+                "precision": 0.28,
+                "recall": 0.5833333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 53
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 3
+                  }
+                ]
+              },
+              "200": {
+                "tp": 61,
+                "fp": 339,
+                "fn": 35,
+                "reviewed": 400,
+                "precision": 0.1525,
+                "recall": 0.6354166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 57
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 4
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6673326877224289,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 94,
+            "overflow": 6,
+            "caught": 41,
+            "false_alerts": 53,
+            "missed": 55,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 56,
+                "reviewed": 50,
+                "overflow": 6,
+                "caught": 40
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 44,
+                "reviewed": 44,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 43,
+          "metrics": {
+            "ap": 0.47610805447566623,
+            "budgets": {
+              "10": {
+                "tp": 10,
+                "fp": 10,
+                "fn": 86,
+                "reviewed": 20,
+                "precision": 0.5,
+                "recall": 0.10416666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 10
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 25,
+                "fp": 25,
+                "fn": 71,
+                "reviewed": 50,
+                "precision": 0.5,
+                "recall": 0.2604166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 24
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 43,
+                "fp": 57,
+                "fn": 53,
+                "reviewed": 100,
+                "precision": 0.43,
+                "recall": 0.4479166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 42
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 55,
+                "fp": 145,
+                "fn": 41,
+                "reviewed": 200,
+                "precision": 0.275,
+                "recall": 0.5729166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 54
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 63,
+                "fp": 337,
+                "fn": 33,
+                "reviewed": 400,
+                "precision": 0.1575,
+                "recall": 0.65625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 58
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 5
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6599837127048713,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 95,
+            "overflow": 5,
+            "caught": 42,
+            "false_alerts": 53,
+            "missed": 54,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 55,
+                "reviewed": 50,
+                "overflow": 5,
+                "caught": 41
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 45,
+                "reviewed": 45,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 44,
+          "metrics": {
+            "ap": 0.4314799441678807,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 25,
+                "fp": 25,
+                "fn": 71,
+                "reviewed": 50,
+                "precision": 0.5,
+                "recall": 0.2604166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 24
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 42,
+                "fp": 58,
+                "fn": 54,
+                "reviewed": 100,
+                "precision": 0.42,
+                "recall": 0.4375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 41
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 57,
+                "fp": 143,
+                "fn": 39,
+                "reviewed": 200,
+                "precision": 0.285,
+                "recall": 0.59375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 53
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 4
+                  }
+                ]
+              },
+              "200": {
+                "tp": 71,
+                "fp": 329,
+                "fn": 25,
+                "reviewed": 400,
+                "precision": 0.1775,
+                "recall": 0.7395833333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 62
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 9
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6689533070154449,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 89,
+            "overflow": 11,
+            "caught": 42,
+            "false_alerts": 47,
+            "missed": 54,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 61,
+                "reviewed": 50,
+                "overflow": 11,
+                "caught": 41
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 39,
+                "reviewed": 39,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "config": {
+        "max_samples": 4096,
+        "max_features": 0.5,
+        "n_estimators": 100
+      },
+      "mean_dev_caught": 40.666666666666664,
+      "std_dev_caught": 0.4714045207910317,
+      "runs": [
+        {
+          "seed": 42,
+          "metrics": {
+            "ap": 0.4057084343521417,
+            "budgets": {
+              "10": {
+                "tp": 8,
+                "fp": 12,
+                "fn": 88,
+                "reviewed": 20,
+                "precision": 0.4,
+                "recall": 0.08333333333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 8
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 22,
+                "fp": 28,
+                "fn": 74,
+                "reviewed": 50,
+                "precision": 0.44,
+                "recall": 0.22916666666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 22
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 0
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 58,
+                "fp": 142,
+                "fn": 38,
+                "reviewed": 200,
+                "precision": 0.29,
+                "recall": 0.6041666666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 55
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 3
+                  }
+                ]
+              },
+              "200": {
+                "tp": 69,
+                "fp": 331,
+                "fn": 27,
+                "reviewed": 400,
+                "precision": 0.1725,
+                "recall": 0.71875,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 62
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 7
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6546819487691832,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 93,
+            "overflow": 7,
+            "caught": 43,
+            "false_alerts": 50,
+            "missed": 53,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 57,
+                "reviewed": 50,
+                "overflow": 7,
+                "caught": 42
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 43,
+                "reviewed": 43,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 43,
+          "metrics": {
+            "ap": 0.43050960550232215,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 23,
+                "fp": 27,
+                "fn": 73,
+                "reviewed": 50,
+                "precision": 0.46,
+                "recall": 0.23958333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 23
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 0
+                  }
+                ]
+              },
+              "50": {
+                "tp": 41,
+                "fp": 59,
+                "fn": 55,
+                "reviewed": 100,
+                "precision": 0.41,
+                "recall": 0.4270833333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 40
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 54,
+                "fp": 146,
+                "fn": 42,
+                "reviewed": 200,
+                "precision": 0.27,
+                "recall": 0.5625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 53
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 65,
+                "fp": 335,
+                "fn": 31,
+                "reviewed": 400,
+                "precision": 0.1625,
+                "recall": 0.6770833333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 59
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 6
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6415093723323454,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 93,
+            "overflow": 7,
+            "caught": 42,
+            "false_alerts": 51,
+            "missed": 54,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 57,
+                "reviewed": 50,
+                "overflow": 7,
+                "caught": 41
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 43,
+                "reviewed": 43,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 44,
+          "metrics": {
+            "ap": 0.4442787279690889,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 25,
+                "fp": 25,
+                "fn": 71,
+                "reviewed": 50,
+                "precision": 0.5,
+                "recall": 0.2604166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 24
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 41,
+                "fp": 59,
+                "fn": 55,
+                "reviewed": 100,
+                "precision": 0.41,
+                "recall": 0.4270833333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 40
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 53,
+                "fp": 147,
+                "fn": 43,
+                "reviewed": 200,
+                "precision": 0.265,
+                "recall": 0.5520833333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 52
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 67,
+                "fp": 333,
+                "fn": 29,
+                "reviewed": 400,
+                "precision": 0.1675,
+                "recall": 0.6979166666666666,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 59
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 8
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6386121954517164,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 93,
+            "overflow": 7,
+            "caught": 43,
+            "false_alerts": 50,
+            "missed": 53,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 57,
+                "reviewed": 50,
+                "overflow": 7,
+                "caught": 42
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 43,
+                "reviewed": 43,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "config": {
+        "max_samples": 4096,
+        "max_features": 1.0,
+        "n_estimators": 100
+      },
+      "mean_dev_caught": 41.333333333333336,
+      "std_dev_caught": 1.247219128924647,
+      "runs": [
+        {
+          "seed": 42,
+          "metrics": {
+            "ap": 0.42158481658686475,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 23,
+                "fp": 27,
+                "fn": 73,
+                "reviewed": 50,
+                "precision": 0.46,
+                "recall": 0.23958333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 23
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 0
+                  }
+                ]
+              },
+              "50": {
+                "tp": 40,
+                "fp": 60,
+                "fn": 56,
+                "reviewed": 100,
+                "precision": 0.4,
+                "recall": 0.4166666666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 39
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 53,
+                "fp": 147,
+                "fn": 43,
+                "reviewed": 200,
+                "precision": 0.265,
+                "recall": 0.5520833333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 52
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 68,
+                "fp": 332,
+                "fn": 28,
+                "reviewed": 400,
+                "precision": 0.17,
+                "recall": 0.7083333333333334,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 61
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 7
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6534185497300855,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 95,
+            "overflow": 5,
+            "caught": 44,
+            "false_alerts": 51,
+            "missed": 52,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 55,
+                "reviewed": 50,
+                "overflow": 5,
+                "caught": 43
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 45,
+                "reviewed": 45,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 43,
+          "metrics": {
+            "ap": 0.47061040338612053,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 25,
+                "fp": 25,
+                "fn": 71,
+                "reviewed": 50,
+                "precision": 0.5,
+                "recall": 0.2604166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 24
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 43,
+                "fp": 57,
+                "fn": 53,
+                "reviewed": 100,
+                "precision": 0.43,
+                "recall": 0.4479166666666667,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 42
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 54,
+                "fp": 146,
+                "fn": 42,
+                "reviewed": 200,
+                "precision": 0.27,
+                "recall": 0.5625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 53
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 69,
+                "fp": 331,
+                "fn": 27,
+                "reviewed": 400,
+                "precision": 0.1725,
+                "recall": 0.71875,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 61
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 8
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.640074042300959,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 92,
+            "overflow": 8,
+            "caught": 43,
+            "false_alerts": 49,
+            "missed": 53,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 58,
+                "reviewed": 50,
+                "overflow": 8,
+                "caught": 42
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 42,
+                "reviewed": 42,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        },
+        {
+          "seed": 44,
+          "metrics": {
+            "ap": 0.44356510386335923,
+            "budgets": {
+              "10": {
+                "tp": 9,
+                "fp": 11,
+                "fn": 87,
+                "reviewed": 20,
+                "precision": 0.45,
+                "recall": 0.09375,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 10,
+                    "caught": 9
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 10,
+                    "caught": 0
+                  }
+                ]
+              },
+              "25": {
+                "tp": 24,
+                "fp": 26,
+                "fn": 72,
+                "reviewed": 50,
+                "precision": 0.48,
+                "recall": 0.25,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 25,
+                    "caught": 23
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 25,
+                    "caught": 1
+                  }
+                ]
+              },
+              "50": {
+                "tp": 41,
+                "fp": 59,
+                "fn": 55,
+                "reviewed": 100,
+                "precision": 0.41,
+                "recall": 0.4270833333333333,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 50,
+                    "caught": 40
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 50,
+                    "caught": 1
+                  }
+                ]
+              },
+              "100": {
+                "tp": 54,
+                "fp": 146,
+                "fn": 42,
+                "reviewed": 200,
+                "precision": 0.27,
+                "recall": 0.5625,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 100,
+                    "caught": 53
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 100,
+                    "caught": 1
+                  }
+                ]
+              },
+              "200": {
+                "tp": 66,
+                "fp": 334,
+                "fn": 30,
+                "reviewed": 400,
+                "precision": 0.165,
+                "recall": 0.6875,
+                "days": [
+                  {
+                    "day": "4",
+                    "transactions": 11594,
+                    "fraud": 69,
+                    "reviewed": 200,
+                    "caught": 60
+                  },
+                  {
+                    "day": "5",
+                    "transactions": 35851,
+                    "fraud": 27,
+                    "reviewed": 200,
+                    "caught": 6
+                  }
+                ]
+              }
+            }
+          },
+          "arrival": {
+            "cutoff": 0.6464909875407842,
+            "fraud": 96,
+            "above_cutoff": 100,
+            "reviewed": 91,
+            "overflow": 9,
+            "caught": 43,
+            "false_alerts": 48,
+            "missed": 53,
+            "batches": [
+              {
+                "batch": 4,
+                "rows": 11594,
+                "fraud": 69,
+                "above_cutoff": 59,
+                "reviewed": 50,
+                "overflow": 9,
+                "caught": 42
+              },
+              {
+                "batch": 5,
+                "rows": 35851,
+                "fraud": 27,
+                "above_cutoff": 41,
+                "reviewed": 41,
+                "overflow": 0,
+                "caught": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ]
+}
