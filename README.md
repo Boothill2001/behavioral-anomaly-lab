@@ -2,11 +2,11 @@
 
 **A fraud review queue has 50 slots every six hours. Which transactions should an analyst see, and what gets missed when that decision happens on arrival?**
 
-I compared scoring methods on **284,807 real, anonymized card transactions** from ULB and Worldline. In the latest research round, a dev-selected **XGBoost caught 78/72/75 of 115 frauds** across three seeds, versus **69** for logistic regression. Reserving five review slots for IF caught zero frauds through that branch. These follow-up comparisons use the same previously inspected evaluation window. [Latest queue experiment](#would-xgboost-benefit-from-five-if-review-slots) · [Kaggle dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+I compared scoring methods on **284,807 real, anonymized card transactions** from ULB and Worldline. Selecting five features with training labels and fitting IF on confirmed normal transactions raised its arrival catches from **0/0/1 to 60/55/58 of 115 frauds** across three seeds. XGBoost remains the main model, catching **78/72/75**. These research rounds reuse the same previously inspected evaluation window. [IF feature experiment](#what-finally-improved-isolation-forest) · [Kaggle dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 
 **Windows quick start.** Double-click `start.bat` and select **English** at the top of the demo. The app runs offline and requires no Python installation. You can also [download the interactive HTML](https://raw.githubusercontent.com/Boothill2001/behavioral-anomaly-lab/main/index.html) and open it directly.
 
-![The Kaggle experiment shows how the same models perform under a batch queue and an arrival-order queue.](kaggle-benchmark.png)
+![The selected five-feature IF catches a fraud missed by the 29-feature model. The table shows results across the same evaluation cohort.](if-feature-study.png)
 
 ## One transaction explains the tradeoff
 
@@ -96,6 +96,29 @@ The 45 + 5 policy must catch more fraud without increasing false alerts at every
 
 </details>
 
+## What finally improved Isolation Forest?
+
+**Transaction 192529 had an amount of 1.00 and a confirmed fraud label.** At seed 42, the 29-feature forest scored it **0.5625**, below its **0.6673** cutoff. The selected five-feature forest scored it **0.7761**, above its own **0.7441** cutoff, and admitted it for review.
+
+I tested two changes independently across three seeds: use the top 5/10/15 features instead of all 29, and fit IF on confirmed legitimate training rows instead of the entire training period. Feature relevance came from mutual information with the training labels. Standalone selection maximized development arrival catches at the same review capacity.
+
+| IF design | Fraud caught on arrival, seeds 42 / 43 / 44 | False alerts |
+|---|---:|---:|
+| All 29 features, all training rows | 0 / 0 / 1 | 84 / 82 / 79 |
+| All 29 features, normal-only training | 0 / 0 / 0 | 82 / 76 / 73 |
+| Top 5 features, all training rows | 49 / 53 / 67 | 40 / 28 / 13 |
+| **Top 5 features, normal-only training, selected on dev** | **60 / 55 / 58** | **26 / 36 / 28** |
+
+The selected features were **V17, V14, V12, V10 and V11**. Keeping all 29 features while changing the training population alone did little. Selecting five features changed the result substantially. Normal-only training had mixed effects across seeds, so the ablation reports every design. The dev-selected candidate remained fixed even though another design scored better on evaluation at one seed.
+
+**This design uses labels.** Labels choose the feature subset, and confirmed legitimate labels define the normal-only fitting population. The experiment therefore evaluates label-informed novelty detection. Training labels are assumed to have matured. It does not establish detection of novel fraud types or performance on a fresh dataset.
+
+**Did it earn five slots alongside XGB?** A separate development objective chose a 15-feature, normal-only IF for the secondary branch. That branch caught zero frauds on the final window, and the combined policy failed the development gate. Improving standalone IF did not establish added value over XGB under the tested five-slot allocation.
+
+In the demo, open **Does a better feature set improve IF?** and select the **Standalone IF rescued** group. Inspect the fitting population, selected features, scores, queue state and historical label. The full table includes all eight designs.
+
+[Frozen feature selection](if-feature-selection.json) · [Research results and transaction traces](if-feature-report.json)
+
 ## Follow account behavior through the pipeline
 
 The Kaggle data has anonymized inputs and no account IDs. A [public transaction simulator](https://github.com/Fraud-Detection-Handbook/simulated-data-raw) supplies account history for the walkthrough. It shows the inputs and outputs of all five steps.
@@ -136,3 +159,5 @@ Open `index.html`. It embeds the reports and works offline. [GitHub Actions](htt
 To reproduce the IF follow-up, run `python if_research.py`, followed by `python experiment.py --render-only`. The runner writes the dev selection before scoring the final 12 hours and saves a separate research report. Opening the demo with `start.bat` uses the saved results.
 
 To reproduce the XGB and quota comparison, run `python queue_experiment.py`, followed by `python experiment.py --render-only`. This research round uses the same previously inspected two-day dataset.
+
+To reproduce feature selection and normal-only IF fitting, run `python if_feature_study.py`, followed by `python experiment.py --render-only`. Feature relevance uses only the first 24 hours of training labels. Model and secondary-branch choices are saved from development results before evaluating the last 12 hours.

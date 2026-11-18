@@ -221,10 +221,14 @@ def build_page(report, output):
     queue = ROOT / "xgb-queue-report.json"
     if queue.exists():
         report = {**report, "queue_research": json.loads(queue.read_text(encoding="utf-8"))}
+    feature_study = ROOT / "if-feature-report.json"
+    if feature_study.exists():
+        report = {**report, "feature_study": json.loads(feature_study.read_text(encoding="utf-8"))}
     payload = json.dumps(report, ensure_ascii=False, allow_nan=False).replace("<", "\\u003c")
     template = (ROOT / "lab.html").read_text(encoding="utf-8")
     template = template.replace("__RESEARCH_SCRIPT__", (ROOT / "research.js").read_text(encoding="utf-8"))
     template = template.replace("__QUEUE_SCRIPT__", (ROOT / "queue.js").read_text(encoding="utf-8"))
+    template = template.replace("__FEATURE_SCRIPT__", (ROOT / "feature-study.js").read_text(encoding="utf-8"))
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(template.replace("__REPORT_JSON__", payload), encoding="utf-8")
 
