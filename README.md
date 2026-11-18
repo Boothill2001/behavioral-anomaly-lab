@@ -2,7 +2,7 @@
 
 **A fraud review queue has 50 slots every six hours. Which transactions should an analyst see, and what gets missed when that decision happens on arrival?**
 
-I compared three scoring methods on **284,807 real, anonymized card transactions** from ULB and Worldline. In the held-out arrival replay, **logistic regression caught 69 of 115 frauds using 87 of 100 available reviews**. Isolation Forest caught zero using all 100 slots. [Kaggle dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) · [Measured report](kaggle-report.json)
+I compared scoring methods on **284,807 real, anonymized card transactions** from ULB and Worldline. In the latest research round, a dev-selected **XGBoost caught 78/72/75 of 115 frauds** across three seeds, versus **69** for logistic regression. Reserving five review slots for IF caught zero frauds through that branch. These follow-up comparisons use the same previously inspected evaluation window. [Latest queue experiment](#would-xgboost-benefit-from-five-if-review-slots) · [Kaggle dataset](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
 
 **Windows quick start.** Double-click `start.bat` and select **English** at the top of the demo. The app runs offline and requires no Python installation. You can also [download the interactive HTML](https://raw.githubusercontent.com/Boothill2001/behavioral-anomaly-lab/main/index.html) and open it directly.
 
@@ -16,9 +16,9 @@ On arrival, **transaction 276864** scored **9.971**. The review cutoff, set on d
 |---|---|---|---|
 | Anonymized card transaction 276864 | 9.971 from logistic regression | Skip on arrival because 9.971 is below 10.554 | Missed fraud |
 
-On the same holdout, waiting for each batch to finish caught **71 frauds with 100 reviews**. Deciding on arrival caught **69 with 87 reviews**. In the replay, the cutoff mattered even with spare queue capacity.
+In the logistic baseline on the same holdout, waiting for each batch to finish caught **71 frauds with 100 reviews**. Deciding on arrival caught **69 with 87 reviews**. In the replay, the cutoff mattered even with spare queue capacity.
 
-## Why logistic regression was selected
+## The original baseline decision
 
 The amount baseline ranks by payment size. Isolation Forest learns an anomaly score from the inputs alone. Logistic regression uses the same inputs as Isolation Forest and also learns from confirmed labels. Both models score 28 anonymized components plus log amount.
 
@@ -61,6 +61,41 @@ Open the demo in English and select **Why did Isolation Forest miss fraud?** Cho
 
 [Development selection](if-dev-selection.json) · [Research results, seeds, paired changes and cases](if-research-report.json)
 
+## Would XGBoost benefit from five IF review slots?
+
+**XGBoost improved catches in this research round. The five IF slots caught zero frauds.** A depth-4 XGBoost model was selected on development arrival replay. On the previously inspected final 12 hours, the 50-slot policy caught **78/72/75 frauds** across seeds 42/43/44, compared with **69** for logistic regression. Reserving five slots for IF changed those results to **75/72/76**.
+
+| Policy | Seed | Fraud caught / 115 | False alerts | Reviews used | Fraud caught via IF |
+|---|---:|---:|---:|---:|---:|
+| Logistic, 50 slots | Fixed baseline | 69 | 18 | 87 | 0 |
+| XGBoost, 50 slots | 42 | 78 | 19 | 97 | 0 |
+| XGBoost + IF, 45 + 5 | 42 | 75 | 21 | 96 | 0 |
+| XGBoost, 50 slots | 43 | 72 | 28 | 100 | 0 |
+| XGBoost + IF, 45 + 5 | 43 | 72 | 23 | 95 | 0 |
+| XGBoost, 50 slots | 44 | 75 | 25 | 100 | 0 |
+| XGBoost + IF, 45 + 5 | 44 | 76 | 18 | 94 | 0 |
+
+**Inspect the cost of reservation.** At seed 42, fraud row **235644** reached the 50-slot queue with two main slots remaining. Under 45 + 5, the main quota was already full, so the same row was skipped. Meanwhile legitimate row **195218** occupied an IF slot. The policy caught three fewer frauds and generated two more false alerts.
+
+The extra catch at seed 44 came through the main branch, whose cutoff also changes when capacity changes. Each reserved IF branch caught zero frauds. The chosen policy remains **50 main + 0 IF**, following the development gate.
+
+![The queue replay shows each transaction's scores, reserved capacity and resulting decision.](xgb-queue.png)
+
+Open **XGBoost and the 45 + 5 review queue** in the English demo. Choose a seed, policy, and example, then step through **input → model scores → quota on arrival → decision → historical label**. The comparison shows both policies on the same transaction. Empty example groups explicitly show zero cases.
+
+<details>
+<summary>Model selection, cutoffs, and reproducibility</summary>
+
+The six XGB configurations combine depth 2/4/6 with class weight 1 or the negative-to-positive training ratio. Each uses 200 trees, learning rate 0.05, row and column sampling of 0.8, CPU histogram training, two threads, and seeds 42/43/44. The main model maximizes mean dev arrival catches, breaking ties by false alerts, seed variation and simpler configuration. It selected depth 4 with class weight 1. The learned scores are used for ranking and thresholding.
+
+For 50 + 0, the cutoff is the lowest score in the pooled dev top 100. For 45 + 5, the main cutoff comes from dev top 90. The IF cutoff comes from the top 10 IF scores among development transactions below the new main cutoff. A main-qualified arrival stays in the main branch even if its quota is full. Reserved capacity resets every six hours, and slots stay in their assigned branch. Only valid, finite features enter scoring.
+
+The 45 + 5 policy must catch more fraud without increasing false alerts at every seed on dev. The runner records the chosen model, cutoffs and policy before scoring the final window. Full candidate comparisons include retrospective Top K, arrival outcomes, AP and ten measurements of 1,024-row CPU scoring after warmup. The timing covers model prediction calls.
+
+[Development selection and policy cutoffs](xgb-queue-selection.json) · [Complete research report and case traces](xgb-queue-report.json)
+
+</details>
+
 ## Follow account behavior through the pipeline
 
 The Kaggle data has anonymized inputs and no account IDs. A [public transaction simulator](https://github.com/Fraud-Detection-Handbook/simulated-data-raw) supplies account history for the walkthrough. It shows the inputs and outputs of all five steps.
@@ -99,3 +134,5 @@ python -m unittest discover -v
 Open `index.html`. It embeds the reports and works offline. [GitHub Actions](https://github.com/Boothill2001/behavioral-anomaly-lab/actions/workflows/verify.yml) runs the unit tests and checks that rebuilding the demo from the committed reports produces the same HTML.
 
 To reproduce the IF follow-up, run `python if_research.py`, followed by `python experiment.py --render-only`. The runner writes the dev selection before scoring the final 12 hours and saves a separate research report. Opening the demo with `start.bat` uses the saved results.
+
+To reproduce the XGB and quota comparison, run `python queue_experiment.py`, followed by `python experiment.py --render-only`. This research round uses the same previously inspected two-day dataset.
